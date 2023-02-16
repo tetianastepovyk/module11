@@ -68,10 +68,20 @@ public class ConvertListToString {
      * який "перемішує" елементи зі стрімів first та second, зупиняючись тоді,
      * коли у одного зі стрімів закінчаться елементи.*/
 
-    public static <T> Stream<T> zip(Stream<T> first, Stream<T> second){
-        Iterator<T> secondIterator = second.iterator();
-        return first.flatMap(element->secondIterator
-                .hasNext()?Stream.of(element,secondIterator.next()):Stream.empty());
+    public static <T> Stream<T> zip(Stream<T> first, Stream<T> second) {
+
+//        Iterator<T> secondIterator = second.iterator();
+//        return first.flatMap(element->secondIterator
+//                .hasNext()?Stream.of(element,secondIterator.next()):Stream.empty());
+        List<T> res = new ArrayList<>();
+        Iterator<T> iterator1 = first.iterator();
+        Iterator<T> iterator2 = second.iterator();
+        while (iterator1.hasNext() && iterator2.hasNext()) {
+            res.add(iterator1.next());
+            res.add(iterator2.next());
+        }
+        return res.stream();
+
     }
 }
 
